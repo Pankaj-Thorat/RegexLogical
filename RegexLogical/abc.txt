@@ -1,0 +1,2 @@
+aab abc aabbcc abbcc aabcabc abbbc abbc 
+
