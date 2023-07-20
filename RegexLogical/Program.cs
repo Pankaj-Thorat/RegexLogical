@@ -1,54 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
-class Program
+namespace RegexLogical
 {
-    static void Main()
+    class Program
     {
-        string sourceFilePath = @"C:\MyData\TestFile.txt";
-
-        // 1. Find the directory name
-        string directoryName = Path.GetDirectoryName(sourceFilePath);
-        Console.WriteLine("Directory Name: " + directoryName);
-
-        // 2. Determine if the file exists
-        bool fileExists = File.Exists(sourceFilePath);
-        Console.WriteLine("File Exists: " + fileExists);
-
-        if (fileExists)
+        static void Main(string[] args)
         {
-            // 3. Find the file extension
-            string fileExtension = Path.GetExtension(sourceFilePath);
-            Console.WriteLine("File Extension: " + fileExtension);
+            //file input
+            string path = @"C:\Users\thora\Source\Repos\Pankaj-Thorat\RegexLogical\RegexLogical\abc.txt";
 
-            // 4. Find the file length in bytes
-            long fileLength = new FileInfo(sourceFilePath).Length;
-            Console.WriteLine("File Length (bytes): " + fileLength);
+            string lines;
 
-            // 5. Serialize and deserialize data in binary format
-            var data = new { Name = "John Doe", Age = 30 };
+            lines = File.ReadAllText(path);
+            Console.WriteLine("Example input : " + lines);
 
-            // Serialize data to binary format
-            byte[] serializedData;
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            using (MemoryStream memoryStream = new MemoryStream())
+            //regex pattern
+            string pattern = @"<[^>]+>";
+
+            Regex regex = new Regex(pattern);
+
+            MatchCollection matches = regex.Matches(lines);
+
+            foreach (Match match in matches)
             {
-                binaryFormatter.Serialize(memoryStream, data);
-                serializedData = memoryStream.ToArray();
+                Console.WriteLine("Match found : " + match.Value);
             }
-
-            // Deserialize data from binary format
-            object deserializedData;
-            using (MemoryStream memoryStream = new MemoryStream(serializedData))
-            {
-                deserializedData = binaryFormatter.Deserialize(memoryStream);
-            }
-
-            // Display deserialized data
-            Console.WriteLine("Deserialized Data:");
-            Console.WriteLine("Name: " + ((dynamic)deserializedData).Name);
-            Console.WriteLine("Age: " + ((dynamic)deserializedData).Age);
+            Console.ReadLine();
         }
     }
 }

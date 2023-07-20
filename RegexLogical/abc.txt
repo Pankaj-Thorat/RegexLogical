@@ -1,2 +1,5 @@
-aab abc aabbcc abbcc aabcabc abbbc abbc 
+aab abc aabbcc abbcc aabcabc abbbc abbc abc_bbc_cbc Abc_abc
+abc_def_ghi jkl_mno_pqr stuv_wxyz 
+<p>The <code>Regex</code> is a compiled
+representation of a regular expression.</p>
 
